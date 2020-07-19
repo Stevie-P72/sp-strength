@@ -1,3 +1,14 @@
 #navbarNav{
     justify-content: flex-end !important;
 }
+
+body {
+    background: url('/media/back-squat-min.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh
+}
+
+.card-outer{
+    background-color: rgba(52,58,64,0.5);
+}
+
