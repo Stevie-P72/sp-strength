@@ -2,13 +2,32 @@
     justify-content: flex-end !important;
 }
 
-body {
+body{
     background: url('/media/back-squat-min.jpg') no-repeat center center fixed;
     background-size: cover;
-    height: 100vh
+    height: 100vh;
+    z-index: -1000;
 }
 
 .card-outer{
     background-color: rgba(52,58,64,0.5);
 }
 
+.background-cover{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    color: black;
+    top: 0;
+}
+
+.top-margin{
+    margin-top: 66px;
+}
+
+.services-container{
+    margin-left:  5%;
+    margin-right:  5%;
+    width: 90%;
+    background-color: white;
+}

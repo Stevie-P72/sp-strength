@@ -4,40 +4,33 @@
 {% load static %}
 
 {% block content %}
-    <div class="background-cover">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col">
-                    <h2 class="header-font">Training Methods</h2>
-                </div>
-            </div>
-            <div class="row">
-
-                {% for type in types %}
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="card" style="width: 18rem;">
-                            <img class="card-img-top" src="..." alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            
-                            <div class="image-container">
-                                <img src="{{ type.image.url }}" alt="{{ type.name }} Image" class = "services_image">
-                            </div>
-                            <p>{{ type.name }}</p>
-                            <p>{{ type.description</p>
-                            <a href="">Want to try this out? book in a session here</a>
-                        </div>
-                    </div>
-                    
-                {% endfor %}
+    <!--<div class="background-cover"></div>-->
+    <div class="container-fluid top-margin services-container p-4">
+        <div class="row">
+            <div class="col">
+                <h2 class="header-font text-center">Training Methods</h2>
             </div>
         </div>
-    
+        <div class="row services-row">
+            
+                {% for type in types %}
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 pb-2">    
+                        <div class="card m-0" style="width: 100%;">
+                            <img class="card-img-top" src="{{ type.image.url }}" alt="Card image cap">
+                            <div class="card-body bg-light">
+                                <h5 class="card-title">{{ type.name }}</h5>
+                                <p class="card-text">{{ type.description }}</p>
+                                <a href="#" class="btn btn-primary">Subscribe for £{{ type.price }}</a>
+                            </div>
+                        </div>
+                    
+                    
+                    </div>    
+                
+                {% endfor %}
+            
+        </div>
     </div>
+    
+    
 {% endblock %}
