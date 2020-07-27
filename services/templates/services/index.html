@@ -20,7 +20,11 @@
                             <div class="card-body bg-light">
                                 <h5 class="card-title">{{ type.name }}</h5>
                                 <p class="card-text">{{ type.description }}</p>
-                                <a href="#" class="btn btn-primary">Subscribe for £{{ type.price }}</a>
+                                {% if request.user.is_superuser %}
+                                <a href="{% url 'article' type.name %}" class="btn btn-primary">View Article</a>
+                                {% else %}
+                                <a href="#" class="btn btn-primary">Purchase for £{{ type.price }}</a>
+                                {% endif %}
                             </div>
                         </div>
                     
