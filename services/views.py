@@ -11,8 +11,8 @@ def services(request):
     return render(request, 'services/index.html', context)
 
 
-def article(request, type_name):
-    article_name = get_object_or_404(Training_Type, pk=type_name)
+def article(request, article_name):
+    article_name = get_object_or_404(Training_Type, name=article_name)
     context = {
         'article': article_name
     }

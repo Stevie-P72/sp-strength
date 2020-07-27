@@ -23,7 +23,7 @@
                                 {% if request.user.is_superuser %}
                                 <a href="{% url 'article' type.name %}" class="btn btn-primary">View Article</a>
                                 {% else %}
-                                <a href="#" class="btn btn-primary">Purchase for £{{ type.price }}</a>
+                                <a href="{% url 'article' type.name %}" class="btn btn-primary">Purchase for £{{ type.price }}</a>
                                 {% endif %}
                             </div>
                         </div>
