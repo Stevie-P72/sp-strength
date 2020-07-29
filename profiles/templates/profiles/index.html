@@ -4,5 +4,11 @@
 {% load static %}
 
 {% block content %}
-    
+    <form action = "{% url 'profiles' %}" method = "POST" id="user_info_update">
+        {% csrf_token %}
+        {{ form | crispy }}
+
+    </form>
+
+
 {% endblock %}
