@@ -1,7 +1,7 @@
 from django.db import models
 import uuid
 from django.conf import settings
-
+from services.models import Training_Type
 # Create your models here.
 
 
@@ -11,8 +11,10 @@ class PurchaseOrder(models.Model):
     last_name = models.CharField(max_length=40, null=False, blank=False)
     email = models.EmailField(max_length=256, null=False, blank=False)
     date = models.DateTimeField(auto_now_add=True)
-    product = models.CharField(max_length=64, null=False, blank=False)
-    order_total = models.DecimalField(max_digits=5, decimal_places=2, null=False, default=0)
+    product = models.ForeignKey(Training_Type, null=False, blank=False,
+                                on_delete=models.CASCADE)
+    order_total = models.DecimalField(max_digits=5, decimal_places=2,
+                                      null=False, default=0)
 
     def _create_po_ref(self):
         return uuid.uuid3().hex.upper()
