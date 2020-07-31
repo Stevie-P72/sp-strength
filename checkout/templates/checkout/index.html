@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    
+    <div class="container">
+        <div class="div">   
+            <div class="col-10 col-offset-1">
+                <h2>Checkout</h2>
+                
+            </div>
+            <div class="col-10 col-offset-1">
+                
+                    
+
+                {% if request.user.is_authenticated %}
+                    {% csrf_token %}
+                        {{ purchase_order_form }}
+                        <form action="{% url 'checkout' article_name %}" id="payment-form">
+                            <label class = "form-check-label" for="save-personal-info">Save Info</label>
+                            <input type="checkbox" class="form-check-input" id="save-personal-info" name="save-personal-info">
+
+
+
+                            <button class="btn btn-black" action="submit">
+                                <span>Purchase Article</span>
+                            </button>
+
+
+                        </form>
+                {% else %}
+                    <p>You need an account to purchase, please <a href="#">login</a> or <a href="">register</a></p>
+                {% endif %}
+                
+                
+            </div>
+        
+        </div>
+    
+    </div>
+{% endblock %}

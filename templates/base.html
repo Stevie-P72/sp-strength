@@ -70,7 +70,7 @@
                                         <a href="#" class="dropdown-item">Manage Services</a>
                                     {% endif %}
                                     <a href="{% url 'profiles' %}" class="dropdown-item">My Profile</a>
-                                    <a href="#" class="dropdown-item">Logout</a>
+                                    <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
                                 </div>
                             </li>
                             {% else %}
