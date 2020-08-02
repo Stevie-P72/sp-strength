@@ -5,7 +5,7 @@
 
 {% block content %}
     
-    <div class="container">
+    <div class="container services-container">
         <div class="div">   
             <div class="col-10 col-offset-1">
                 <h2>Checkout</h2>
@@ -22,7 +22,7 @@
                             <label class = "form-check-label" for="save-personal-info">Save Info</label>
                             <input type="checkbox" class="form-check-input" id="save-personal-info" name="save-personal-info">
 
-
+                            <div id="stripe_card"></div>
 
                             <button class="btn btn-black" action="submit">
                                 <span>Purchase Article</span>
@@ -40,4 +40,10 @@
         </div>
     
     </div>
+{% endblock %}
+{% block postloadjs %}
+    {{ block.super }}
+    {{ stripe_public_key|json_script:"id_stripe_public_key" }}
+    {{ client_secret|json_script:"id_client_secret" }}
+    <script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
 {% endblock %}
