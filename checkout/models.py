@@ -6,7 +6,7 @@ from services.models import Training_Type
 
 
 class PurchaseOrder(models.Model):
-    po_ref = models.CharField(max_length=16, null=False, editable=False)
+    po_ref = models.CharField(max_length=32, null=False, editable=False)
     first_name = models.CharField(max_length=40, null=False, blank=False)
     last_name = models.CharField(max_length=40, null=False, blank=False)
     email = models.EmailField(max_length=256, null=False, blank=False)
@@ -17,7 +17,7 @@ class PurchaseOrder(models.Model):
                                       null=False, default=0)
 
     def _create_po_ref(self):
-        return uuid.uuid3().hex.upper()
+        return uuid.uuid4().hex.upper()
 
     def save(self, *args, **kwargs):
         if not self.po_ref:

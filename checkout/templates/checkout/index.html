@@ -16,15 +16,17 @@
                     
 
                 {% if request.user.is_authenticated %}
-                    {% csrf_token %}
-                        {{ purchase_order_form }}
-                        <form action="{% url 'checkout' article_name %}" id="payment-form">
+                    
+                        
+                        <form action="{% url 'checkout' article_name %}" method="POST" id="payment-form">
+                            {% csrf_token %}
+                            {{ purchase_order_form }}
                             <label class = "form-check-label" for="save-personal-info">Save Info</label>
                             <input type="checkbox" class="form-check-input" id="save-personal-info" name="save-personal-info">
 
                             <div id="stripe_card"></div>
 
-                            <button class="btn btn-black" action="submit">
+                            <button class="btn btn-black" action="submit" id="submit-btn">
                                 <span>Purchase Article</span>
                             </button>
 

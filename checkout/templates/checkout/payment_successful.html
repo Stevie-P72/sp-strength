@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <h1> TEst </h1>
+    <a href="{% url 'article' type.name %}">View your new article</a>
+{% endblock %}
