@@ -24,10 +24,10 @@ def checkout(request, article_name):
         print(form_data)
         order_form = PurchaseOrderForm(form_data)
         if order_form.is_valid():
-            print("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
             PurchaseOrder = order_form.save()
             request.session['save-personal-info'] = 'save-personal-info' in request.POST
-            return redirect(reverse('payment_successful', order.po_ref))
+            return redirect(reverse('payment_successful',
+                                    PurchaseOrder.po_ref))
         else:
             print("error")
 

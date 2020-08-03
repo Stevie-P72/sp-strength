@@ -12,7 +12,20 @@
                 <a href="{% url 'services' %}">Services</a>
             </div>
             <div class="home-card-container col-4">
-                <a href="{% url 'profiles' %}">view your account</a>
+                {% if request.user.is_authenticated %}
+                    <div class="row">
+                        <div class="col-12">
+                            <p>Hello <strong>{{profile}}</strong>!</p>
+                            <a href="{% url 'profiles' %}">view your account</a>
+                        </div>
+                    </div>
+                {% else %} 
+                    <div class="row h-100">
+                        <div class="col-12 h-100">
+                            <a href="{% url 'account_login' %}" class="h-100 w-100 d-block">Login Or Register</a>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
             <div class="home-card-container col-4">
                 <a href="">check availability</a>

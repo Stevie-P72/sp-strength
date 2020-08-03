@@ -5,9 +5,9 @@ from .forms import UserInfoForm
 
 
 def index(request):
-    profile = get_object_or_404(UserProfile, user=request.user)
-    form = UserInfoForm(instance=profile)
     if request.user.is_authenticated:
+        profile = get_object_or_404(UserProfile, user=request.user)
+        form = UserInfoForm(instance=profile)
         context = {
             'profile': profile,
             'form': form,

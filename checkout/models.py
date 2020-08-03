@@ -2,11 +2,14 @@ from django.db import models
 import uuid
 from django.conf import settings
 from services.models import Training_Type
+from profiles.models import UserProfile
 # Create your models here.
 
 
 class PurchaseOrder(models.Model):
     po_ref = models.CharField(max_length=32, null=False, editable=False)
+    username = models.ForeignKey(UserProfile, on_delete=models.SET_NULL,
+                                 null=True, blank=True)
     first_name = models.CharField(max_length=40, null=False, blank=False)
     last_name = models.CharField(max_length=40, null=False, blank=False)
     email = models.EmailField(max_length=256, null=False, blank=False)
