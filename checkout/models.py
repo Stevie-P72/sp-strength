@@ -8,14 +8,16 @@ from profiles.models import UserProfile
 
 class PurchaseOrder(models.Model):
     po_ref = models.CharField(max_length=32, null=False, editable=False)
-    username = models.ForeignKey(UserProfile, on_delete=models.SET_NULL,
-                                 null=True, blank=True)
+    userprofile = models.ForeignKey(UserProfile, on_delete=models.CASCADE,
+                                    null=False, blank=False,
+                                    db_column='username')
     first_name = models.CharField(max_length=40, null=False, blank=False)
     last_name = models.CharField(max_length=40, null=False, blank=False)
     email = models.EmailField(max_length=256, null=False, blank=False)
     date = models.DateTimeField(auto_now_add=True)
     product = models.ForeignKey(Training_Type, null=False, blank=False,
-                                on_delete=models.CASCADE)
+                                on_delete=models.CASCADE,
+                                db_column='product')
     order_total = models.DecimalField(max_digits=5, decimal_places=2,
                                       null=False, default=0)
 

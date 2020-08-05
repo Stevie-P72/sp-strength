@@ -14,20 +14,24 @@ def checkout(request, article_name):
 
     article_name = get_object_or_404(Training_Type, name=article_name)
     if request.method == 'POST':
-        print(article_name.name)
         form_data = {
             'first_name': request.POST['first_name'],
             'last_name': request.POST['last_name'],
-            'email': request.POST['email'],
-            'product': article_name.name
+            'email': request.POST['email']
         }
-        print(form_data)
         order_form = PurchaseOrderForm(form_data)
         if order_form.is_valid():
-            PurchaseOrder = order_form.save()
+            p = PurchaseOrder(product=article_name,
+                              first_name=request.POST['first_name'],
+                              last_name=request.POST['last_name'],
+                              email=request.POST['email'])
+            p.save()
             request.session['save-personal-info'] = 'save-personal-info' in request.POST
-            return redirect(reverse('payment_successful',
-                                    PurchaseOrder.po_ref))
+            seperator = ""
+
+            po_ref = seperator.join(p.po_ref)
+
+            return redirect(reverse('payment_successful', args=[article_name, po_ref]))
         else:
             print("error")
 
@@ -50,11 +54,15 @@ def checkout(request, article_name):
         return render(request, "checkout/index.html", context)
 
 
-def payment_successful(request, po_ref):
-    save_info = request.session.get('save-personal-info')
+def payment_successful(request,article_name, po_ref):
+    print("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
+    # save_info = request.session.get('save-personal-info')
     order = get_object_or_404(PurchaseOrder, po_ref=po_ref)
+    print(order)
     # add success message
     context = {
         'order': order,
+        'po': po_ref
     }
+
     return render(request, 'checkout/payment_successful.html', context)
