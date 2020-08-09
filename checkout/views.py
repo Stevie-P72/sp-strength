@@ -3,6 +3,7 @@ from services.models import Training_Type
 from .models import PurchaseOrder
 from .forms import PurchaseOrderForm
 from django.conf import settings
+from profiles.models import UserProfile
 
 import stripe
 # Create your views here.
@@ -11,7 +12,7 @@ import stripe
 def checkout(request, article_name):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
-
+    user = get_object_or_404(UserProfile, user=request.user)
     article_name = get_object_or_404(Training_Type, name=article_name)
     if request.method == 'POST':
         form_data = {
@@ -21,11 +22,15 @@ def checkout(request, article_name):
         }
         order_form = PurchaseOrderForm(form_data)
         if order_form.is_valid():
+
             p = PurchaseOrder(product=article_name,
+                              user_profile=user,
                               first_name=request.POST['first_name'],
                               last_name=request.POST['last_name'],
-                              email=request.POST['email'])
+                              email=request.POST['email'],
+                              order_total=article_name.price)
             p.save()
+            print(p.user_profile)
             request.session['save-personal-info'] = 'save-personal-info' in request.POST
             seperator = ""
 
@@ -54,11 +59,9 @@ def checkout(request, article_name):
         return render(request, "checkout/index.html", context)
 
 
-def payment_successful(request,article_name, po_ref):
-    print("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
+def payment_successful(request, article_name, po_ref):
     # save_info = request.session.get('save-personal-info')
     order = get_object_or_404(PurchaseOrder, po_ref=po_ref)
-    print(order)
     # add success message
     context = {
         'order': order,

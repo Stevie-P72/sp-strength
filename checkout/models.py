@@ -8,9 +8,9 @@ from profiles.models import UserProfile
 
 class PurchaseOrder(models.Model):
     po_ref = models.CharField(max_length=32, null=False, editable=False)
-    userprofile = models.ForeignKey(UserProfile, on_delete=models.CASCADE,
-                                    null=False, blank=False,
-                                    db_column='username')
+    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE,
+                                     null=False, blank=False,
+                                     db_column='user_profile')
     first_name = models.CharField(max_length=40, null=False, blank=False)
     last_name = models.CharField(max_length=40, null=False, blank=False)
     email = models.EmailField(max_length=256, null=False, blank=False)
