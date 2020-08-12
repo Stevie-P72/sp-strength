@@ -21,10 +21,11 @@
                                 <h5 class="card-title">{{ type.name }}</h5>
                                 <p class="card-text">{{ type.description }}</p>
                                 {% if request.user.is_superuser %}
-                                <a href="{% url 'article' type.name %}" class="btn btn-primary">View Article</a>
-                                <a href="{% url 'checkout' type.name %}" class="btn btn-primary">Purchase for £{{ type.price }}</a>
+                                    <a href="{% url 'article' type.name %}" class="btn btn-primary">View Article</a>
+                                {% elif type in purchased %}
+                                    <a href="{% url 'article' type.name %}" class="btn btn-primary">View Article</a>
                                 {% else %}
-                                <a href="{% url 'checkout' type.name %}" class="btn btn-primary">Purchase for £{{ type.price }}</a>
+                                    <a href="{% url 'checkout' type.name %}" class="btn btn-primary">Purchase for £{{ type.price }}</a>
                                 {% endif %}
                             </div>
                         </div>

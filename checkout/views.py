@@ -30,7 +30,6 @@ def checkout(request, article_name):
                               email=request.POST['email'],
                               order_total=article_name.price)
             p.save()
-            print(p.user_profile)
             request.session['save-personal-info'] = 'save-personal-info' in request.POST
             seperator = ""
 
@@ -41,8 +40,10 @@ def checkout(request, article_name):
             print("error")
 
     else:
-        article_is_purchased = PurchaseOrder.objects.filter(user_profile=user)
-        if article_is_purchased[0] is None:
+        try:
+            article_is_purchased = PurchaseOrder.objects.get(user_profile=user, product=article_name)
+            return redirect('article', article_name=article_name)
+        except:
             article_name = get_object_or_404(Training_Type, name=article_name)
             purchase_amount = round(article_name.price * 100)
             stripe.api_key = stripe_secret_key
@@ -59,8 +60,6 @@ def checkout(request, article_name):
                 'stripe_public_key': stripe_public_key
                 }
             return render(request, "checkout/index.html", context)
-        else:
-            return redirect('article', article_name=article_name)
 
 
 def payment_successful(request, article_name, po_ref):
