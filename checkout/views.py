@@ -41,22 +41,26 @@ def checkout(request, article_name):
             print("error")
 
     else:
-        article_name = get_object_or_404(Training_Type, name=article_name)
-        purchase_amount = round(article_name.price * 100)
-        stripe.api_key = stripe_secret_key
-        intent = stripe.PaymentIntent.create(
-            amount=purchase_amount,
-            currency=settings.STRIPE_CURRENCY,
-        )
+        article_is_purchased = PurchaseOrder.objects.filter(user_profile=user)
+        if article_is_purchased[0] is None:
+            article_name = get_object_or_404(Training_Type, name=article_name)
+            purchase_amount = round(article_name.price * 100)
+            stripe.api_key = stripe_secret_key
+            intent = stripe.PaymentIntent.create(
+                amount=purchase_amount,
+                currency=settings.STRIPE_CURRENCY,
+            )
 
-        purchase_order_form = PurchaseOrderForm()
-        context = {
-            'purchase_order_form': purchase_order_form,
-            'article_name': article_name,
-            'client_secret': intent.client_secret,
-            'stripe_public_key': stripe_public_key
-            }
-        return render(request, "checkout/index.html", context)
+            purchase_order_form = PurchaseOrderForm()
+            context = {
+                'purchase_order_form': purchase_order_form,
+                'article_name': article_name,
+                'client_secret': intent.client_secret,
+                'stripe_public_key': stripe_public_key
+                }
+            return render(request, "checkout/index.html", context)
+        else:
+            return redirect('article', article_name=article_name)
 
 
 def payment_successful(request, article_name, po_ref):
