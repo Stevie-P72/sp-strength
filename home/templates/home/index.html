@@ -8,28 +8,36 @@
         </div>
 
         <div class="row h-25 card-outer">
-            <div class="home-card-container col-4">
-                <a href="{% url 'services' %}">Services</a>
-            </div>
-            <div class="home-card-container col-4">
-                {% if request.user.is_authenticated %}
-                    <div class="row">
-                        <div class="col-12">
-                            <p>Hello <strong>{{profile}}</strong>!</p>
-                            <a href="{% url 'profiles' %}">view your account</a>
-                        </div>
-                    </div>
-                {% else %} 
+            <div class="home-card-container col-6 hvr-shrink">
+                <a href="{% url 'services' %}" class="w-100 h-100 d-block hvr-fade">
                     <div class="row h-100">
-                        <div class="col-12 h-100">
-                            <a href="{% url 'account_login' %}" class="h-100 w-100 d-block">Login Or Register</a>
+                        <div class="col-12 my-auto">
+                            <p class="text-light text-center d-block">View available Services</p>
                         </div>
                     </div>
+                </a>
+            </div>
+            <div class="home-card-container col-6 hvr-shrink">
+                {% if request.user.is_authenticated %} 
+                    <a href="{% url 'profiles' %}" class="w-100 h-100 d-block hvr-fade">
+                        <div class="row h-100">
+                            <div class="col-12 my-auto">
+                                <p class="text-light text-center">Hello <strong>{{profile}}</strong>!</p>
+                                <p class = "text-center text-light d-block">view your account</p>
+                            </div>
+                        </div>
+                    </a>
+                {% else %} 
+                    <a href="{% url 'account_login' %}" class="w-100 h-100 d-block hvr-fade">
+                        <div class="row h-100">
+                            <div class="col-12 my-auto">
+                                <p class="text-center text-light d-block">Login Or Register</p>    
+                            </div>
+                        </div>
+                    </a>
                 {% endif %}
             </div>
-            <div class="home-card-container col-4">
-                <a href="">check availability</a>
-            </div>
+            
         
         </div>
     
