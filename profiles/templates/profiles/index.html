@@ -7,7 +7,7 @@
     {{profile}}
     <form action = "{% url 'profiles' %}" method = "POST" id="user_info_update">
         {% csrf_token %}
-        {{ form | crispy }}
+        {{ form }}
 
     </form>
 

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    
+    <div class="container-fluid top-margin services-container p-4">
+        <div class="row">
+           <div class="col-12">
+                <form action = "{% url 'edit' article %}" method = "POST" id="article_update">
+                    {{ form }}
+                    <button></button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
