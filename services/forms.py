@@ -5,19 +5,21 @@ from .views import Training_Type
 class ArticleForm(forms.ModelForm):
     class Meta:
         model = Training_Type
-        fields = ['description', 'article', 'image', 'price']
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         placeholders = {
+            'name': 'name',
             'description': 'description',
             'article': 'article content',
             'image': 'image',
             'price': 'price',
         }
+        self.fields['name'].widget.attrs['readonly'] = True
         self.fields['description'].widget.attrs['autofocus'] = True
         for field in self.fields:
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
-            self.fields[field].widget.attrs['class'] = ''
-            self.fields[field].label = False
+            self.fields[field].widget.attrs['class'] = 'formstyle'
+            

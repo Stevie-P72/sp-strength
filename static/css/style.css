@@ -36,3 +36,8 @@ body{
 .hvr-fade:hover{
     background-color: rgba(183,168,168,0.5) !important
 }
+
+.formstyle{
+    width: 80%;
+    margin: 3px 10%
+}
