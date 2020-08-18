@@ -35,7 +35,9 @@
                     </div>    
                 
                 {% endfor %}
-            
+                {% if request.user.is_superuser %}
+                    <a href="{% url 'create' %}">Create New</a>
+                {% endif %}
         </div>
     </div>
     

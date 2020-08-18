@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Training_Type
-from .forms import ArticleForm
+from .forms import ArticleForm, NewArticleForm
 from checkout.models import PurchaseOrder
 from profiles.models import UserProfile
 # Create your views here.
@@ -38,6 +38,25 @@ def article(request, article_name):
             return redirect('checkout', article_name=article_name)
 
 
+def create(request):
+    if request.user.is_superuser:
+        if request.method == 'POST':
+            form = NewArticleForm(request.POST, request.FILES)
+            if form.is_valid():
+                article_name = form.save()
+                return redirect('article', article_name)
+            else:
+                return redirect('create')
+        else:
+            form = NewArticleForm()
+            context = {
+                'form': form
+            }
+            return render(request, 'services/create.html', context)
+    else:
+        return redirect('services')
+
+
 def edit(request, article_name):
     article_name = get_object_or_404(Training_Type, name=article_name)
     context = {
@@ -58,3 +77,10 @@ def edit(request, article_name):
         return render(request, 'services/edit.html', context)
     else:
         return redirect('article', article_name)
+
+
+def delete(request, article_name):
+    article_name = get_object_or_404(Training_Type, name=article_name)
+    if request.user.is_superuser:
+        article_name.delete()
+    return redirect('services')
