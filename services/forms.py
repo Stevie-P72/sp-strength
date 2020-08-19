@@ -7,6 +7,8 @@ class ArticleForm(forms.ModelForm):
         model = Training_Type
         fields = '__all__'
 
+    image = forms.ImageField(label='Image', required=False)
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         placeholders = {
@@ -16,6 +18,7 @@ class ArticleForm(forms.ModelForm):
             'image': 'image',
             'price': 'price',
         }
+
         self.fields['name'].widget.attrs['readonly'] = True
         self.fields['description'].widget.attrs['autofocus'] = True
         for field in self.fields:

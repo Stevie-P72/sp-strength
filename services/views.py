@@ -42,6 +42,7 @@ def create(request):
     if request.user.is_superuser:
         if request.method == 'POST':
             form = NewArticleForm(request.POST, request.FILES)
+            print(form)
             if form.is_valid():
                 article_name = form.save()
                 return redirect('article', article_name)
@@ -65,6 +66,7 @@ def edit(request, article_name):
     if request.user.is_superuser:
         if request.method == 'POST':
             form = ArticleForm(request.POST, request.FILES, instance=article_name)
+            print(form)
             if form.is_valid():
                 form.save()
                 return redirect('article', article_name)
