@@ -7,7 +7,7 @@ from django.db.models.signals import post_save
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, editable=False)
     email = models.EmailField(max_length=256, null=True, blank=True)
     personal_info_first_name = models.CharField(max_length=80, null=True, blank=True)
     personal_info_last_name = models.CharField(max_length=80, null=True, blank=True)
