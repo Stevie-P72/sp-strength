@@ -21,11 +21,17 @@
                         <form action="{% url 'checkout' article_name %}" method="POST" id="payment-form">
                             {% csrf_token %}
                             {{ purchase_order_form }}
-                            <label class = "form-check-label" for="save-personal-info">Save Info</label>
-                            <input type="checkbox" class="form-check-input" id="save-personal-info" name="save-personal-info">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label class = "form-check-label d-inline-block" for="save-personal-info">Save Info</label>
+
+                                    <input type="checkbox" class="form-check-input d-inline-block ml-2" id="save-personal-info" name="save-personal-info">
+                                </div>
+                                
+                            </div>
                             <input type="text" value="{{ article_name }}" name="article_name" class="d-none">
                             <input type="text" value="{{ UserProfile }}" name="username" class="d-none">
-                            <div id="stripe_card"></div>
+                            <div id="stripe_card" class = "formstyle"></div>
 
                             <button class="btn btn-black" action="submit" id="submit-btn">
                                 <span>Purchase Article</span>

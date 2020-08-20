@@ -22,5 +22,4 @@ class PurchaseOrderForm(forms.ModelForm):
         for field in self.fields:
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
-            self.fields[field].label = True
             self.fields[field].widget.attrs['class'] = 'formstyle'
