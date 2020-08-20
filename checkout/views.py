@@ -12,7 +12,6 @@ import stripe
 def checkout(request, article_name):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
-
     article_name = get_object_or_404(Training_Type, name=article_name)
     if request.method == 'POST':
         form_data = {
@@ -41,7 +40,6 @@ def checkout(request, article_name):
 
     else:
         try:
-            
             article_is_purchased = PurchaseOrder.objects.get(user_profile=user, product=article_name)
             return redirect('article', article_name=article_name)
         except:
@@ -52,8 +50,11 @@ def checkout(request, article_name):
                 amount=purchase_amount,
                 currency=settings.STRIPE_CURRENCY,
             )
-
+            user = get_object_or_404(UserProfile, user=request.user)
             purchase_order_form = PurchaseOrderForm()
+            purchase_order_form.fields['first_name'].widget.attrs['value'] = user.first_name
+            purchase_order_form.fields['last_name'].widget.attrs['value'] = user.last_name
+            purchase_order_form.fields['email'].widget.attrs['value'] = user.email
             context = {
                 'purchase_order_form': purchase_order_form,
                 'article_name': article_name,

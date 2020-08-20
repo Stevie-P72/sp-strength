@@ -65,8 +65,8 @@ def edit(request, article_name):
             }
     if request.user.is_superuser:
         if request.method == 'POST':
-            form = ArticleForm(request.POST, request.FILES, instance=article_name)
-            print(form)
+            form = ArticleForm(request.POST, request.FILES,
+                               instance=article_name)
             if form.is_valid():
                 form.save()
                 return redirect('article', article_name)

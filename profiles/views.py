@@ -7,11 +7,20 @@ from .forms import UserInfoForm
 def index(request):
     if request.user.is_authenticated:
         profile = get_object_or_404(UserProfile, user=request.user)
-        form = UserInfoForm(instance=profile)
-        context = {
-            'profile': profile,
-            'form': form,
-        }
-        return render(request, 'profiles/index.html', context)
+        if request.method == 'POST':
+            form = UserInfoForm(request.POST, instance=profile)
+            if form.is_valid():
+                form.save()
+                return redirect('profiles')
+
+        else:
+            form = UserInfoForm(instance=profile)
+            context = {
+                'profile': profile,
+                'form': form,
+            }
+            return render(request, 'profiles/index.html', context)
     else:
+
         return redirect('account_login')
+
