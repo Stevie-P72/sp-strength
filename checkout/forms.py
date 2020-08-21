@@ -16,7 +16,7 @@ class PurchaseOrderForm(forms.ModelForm):
             "email": "Email Address*"
         }
         self.fields['first_name'].widget.attrs['autofocus'] = True
-        
+
         self.fields['last_name'].widget.attrs['value'] = UserProfile.last_name
         self.fields['email'].widget.attrs['value'] = UserProfile.email
         for field in self.fields:

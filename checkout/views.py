@@ -4,6 +4,8 @@ from .models import PurchaseOrder
 from .forms import PurchaseOrderForm
 from django.conf import settings
 from profiles.models import UserProfile
+from profiles.forms import UserInfoForm
+
 
 import stripe
 # Create your views here.
@@ -30,6 +32,10 @@ def checkout(request, article_name):
                               order_total=article_name.price)
             p.save()
             request.session['save-personal-info'] = 'save-personal-info' in request.POST
+            request.session['first_name'] = first_name=request.POST['first_name']
+            request.session['last_name'] = last_name=request.POST['last_name']
+            request.session['email'] = email=request.POST['email']
+
             seperator = ""
 
             po_ref = seperator.join(p.po_ref)
@@ -65,7 +71,18 @@ def checkout(request, article_name):
 
 
 def payment_successful(request, article_name, po_ref):
-    # save_info = request.session.get('save-personal-info')
+    save_info = request.session.get('save-personal-info')
+    if save_info:
+        profile = get_object_or_404(UserProfile, user=request.user)
+        print(profile.first_name)
+
+        profile.first_name = request.session.get('first_name')
+        form_data = {
+            'first_name': request.session.get('first_name'),
+            'last_name': request.session.get('last_name'),
+            'email': request.session.get('email')
+        }
+        UserInfoForm(form_data, instance=profile).save()
     order = get_object_or_404(PurchaseOrder, po_ref=po_ref)
     # add success message
     context = {
