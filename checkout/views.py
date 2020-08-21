@@ -5,8 +5,6 @@ from .forms import PurchaseOrderForm
 from django.conf import settings
 from profiles.models import UserProfile
 from profiles.forms import UserInfoForm
-
-
 import stripe
 # Create your views here.
 
@@ -23,6 +21,12 @@ def checkout(request, article_name):
         }
         order_form = PurchaseOrderForm(form_data)
         if order_form.is_valid():
+            # Not sure if needed?
+
+            # order = order_form.save(commit=False)
+            # order.stripe_pid = request.POST.get('client_secret').split('_secret')[0]
+            # order.save()
+
             user = get_object_or_404(UserProfile, user=request.user)
             p = PurchaseOrder(product=article_name,
                               user_profile=user,

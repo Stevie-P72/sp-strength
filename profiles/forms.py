@@ -11,12 +11,11 @@ class UserInfoForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         placeholders = {
             'email': 'email',
-            'personal_info_first_name': 'First Name',
-            'personal_info_last_name': 'Last Name',
+            'first_name': 'First Name',
+            'last_name': 'Last Name',
         }
-        self.fields['personal_info_first_name'].widget.attrs['autofocus'] = True
+        self.fields['first_name'].widget.attrs['autofocus'] = True
         for field in self.fields:
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
             self.fields[field].widget.attrs['class'] = 'formstyle'
-
