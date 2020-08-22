@@ -26,7 +26,7 @@
                                 {% elif type in purchased %}
                                     <a href="{% url 'article' type.name %}" class="btn btn-primary">View Article</a>
                                 {% else %}
-                                    <a href="{% url 'checkout' type.name %}" class="btn btn-primary">Purchase for £{{ type.price }}</a>
+                                    <a href="{% url 'checkout' type.name %}" class="btn btn-primary">Purchase for {% if type.price is not None %}£{{ type.price }}{% else %} Free {% endif %}</a>
                                 {% endif %}
                             </div>
                         </div>
@@ -35,14 +35,15 @@
                     </div>    
                 
                 {% endfor %}
-                {% if request.user.is_superuser %}
-                <div class="row">
-                    <div class="col-12">
-                        <a class = "btn btn-primary" href="{% url 'create' %}">Create New</a>
-                    </div>
-                </div>
-                {% endif %}
+                
         </div>
+        {% if request.user.is_superuser %}
+            <div class="row">
+                <div class="col-12">
+                    <a class = "btn btn-primary" href="{% url 'create' %}">Create New</a>
+                </div>
+            </div>
+        {% endif %}
     </div>
     
     
