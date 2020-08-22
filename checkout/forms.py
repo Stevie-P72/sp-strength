@@ -17,8 +17,6 @@ class PurchaseOrderForm(forms.ModelForm):
         }
         self.fields['first_name'].widget.attrs['autofocus'] = True
 
-        self.fields['last_name'].widget.attrs['value'] = UserProfile.last_name
-        self.fields['email'].widget.attrs['value'] = UserProfile.email
         for field in self.fields:
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder

@@ -62,9 +62,12 @@ def checkout(request, article_name):
             )
             user = get_object_or_404(UserProfile, user=request.user)
             purchase_order_form = PurchaseOrderForm()
-            purchase_order_form.fields['first_name'].widget.attrs['value'] = user.first_name
-            purchase_order_form.fields['last_name'].widget.attrs['value'] = user.last_name
-            purchase_order_form.fields['email'].widget.attrs['value'] = user.email
+            if user.first_name is not None:
+                purchase_order_form.fields['first_name'].widget.attrs['value'] = user.first_name
+            if user.last_name is not None:
+                purchase_order_form.fields['last_name'].widget.attrs['value'] = user.last_name
+            if user.email is not None:
+                purchase_order_form.fields['email'].widget.attrs['value'] = user.email
             context = {
                 'purchase_order_form': purchase_order_form,
                 'article_name': article_name,
