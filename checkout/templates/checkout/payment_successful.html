@@ -2,7 +2,9 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-    <h1> TEst </h1>
-    <p>{{ order.user_profile }}</p>
-    <a href="#">View your new article</a>
+    <div class="container-fluid top-margin services-container p-4">
+        <h2 class="header-font text-center">Hi, {{ profile }} Thank you for your purchase!</h2>
+        <p class="text-center">A confirmation email has been sent to {{ order.email }}</p>
+        <p class="text-center">You can view your new article <a href="{% url 'article' order.product %}">here</a>, or you can browse some of our other excellent <a href="{% url 'services' %}">articles</a>.</p>
+    </div>
 {% endblock %}

@@ -79,10 +79,9 @@ def checkout(request, article_name):
 
 def payment_successful(request, article_name, po_ref):
     save_info = request.session.get('save-personal-info')
+    profile = get_object_or_404(UserProfile, user=request.user)
     if save_info:
         profile = get_object_or_404(UserProfile, user=request.user)
-        print(profile.first_name)
-
         profile.first_name = request.session.get('first_name')
         form_data = {
             'first_name': request.session.get('first_name'),
@@ -94,7 +93,8 @@ def payment_successful(request, article_name, po_ref):
     # add success message
     context = {
         'order': order,
-        'po': po_ref
+        'po': po_ref,
+        'profile': profile
     }
 
     return render(request, 'checkout/payment_successful.html', context)

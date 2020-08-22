@@ -36,7 +36,11 @@
                 
                 {% endfor %}
                 {% if request.user.is_superuser %}
-                    <a href="{% url 'create' %}">Create New</a>
+                <div class="row">
+                    <div class="col-12">
+                        <a class = "btn btn-primary" href="{% url 'create' %}">Create New</a>
+                    </div>
+                </div>
                 {% endif %}
         </div>
     </div>
