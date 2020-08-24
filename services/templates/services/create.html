@@ -11,7 +11,7 @@
                 <form action = "{% url 'create' %}" method = "POST" id="article_update" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form }}
-                    <button type="submit">Submit</button>
+                    <button class="btn btn-primary mt-2" type="submit">Submit</button>
                 </form>
             </div>
         </div>

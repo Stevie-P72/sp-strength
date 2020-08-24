@@ -11,9 +11,10 @@
                 <form action = "{% url 'edit' article %}" method = "POST" id="article_update" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form }}
-                    <button type="submit">Submit</button>
+                    <button class="btn btn-primary mt-2" type="submit">Submit</button> 
+                    <a class="btn btn-primary mt-2" href="{% url 'delete' article %}">Delete</a>
                 </form>
-                    <a href="{% url 'delete' article %}">Delete</a>
+                    
             </div>
         </div>
     </div>
