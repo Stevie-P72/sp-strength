@@ -33,14 +33,14 @@
                             <input type="text" value="{{ UserProfile }}" name="username" class="d-none">
                             <div id="stripe_card" class = "formstyle"></div>
 
-                            <button class="btn btn-black" action="submit" id="submit-btn">
+                            <button class="btn btn-black" id="submit-btn">
                                 <span>Purchase Article</span>
                             </button>
 
 
                         </form>
                 {% else %}
-                    <p>You need an account to purchase, please <a href="#">login or register</a></p>
+                    <p>You need an account to purchase, please <a href="{% url 'account_login' %}">login or register</a></p>
                 {% endif %}
                 
                 
