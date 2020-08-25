@@ -1,0 +1,1 @@
+web: gunicorn sp-strength.wsgi:application
