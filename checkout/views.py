@@ -6,6 +6,8 @@ from django.conf import settings
 from profiles.models import UserProfile
 from profiles.forms import UserInfoForm
 import stripe
+from django.core.mail import send_mail
+import os
 # Create your views here.
 
 
@@ -13,6 +15,7 @@ def checkout(request, article_name):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
     article_name = get_object_or_404(Training_Type, name=article_name)
+    user = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
         form_data = {
             'first_name': request.POST['first_name'],
@@ -21,12 +24,6 @@ def checkout(request, article_name):
         }
         order_form = PurchaseOrderForm(form_data)
         if order_form.is_valid():
-            # Not sure if needed?
-
-            # order = order_form.save(commit=False)
-            # order.stripe_pid = request.POST.get('client_secret').split('_secret')[0]
-            # order.save()
-
             user = get_object_or_404(UserProfile, user=request.user)
             p = PurchaseOrder(product=article_name,
                               user_profile=user,
@@ -49,10 +46,10 @@ def checkout(request, article_name):
             print("error")
 
     else:
-        try:
-            article_is_purchased = PurchaseOrder.objects.get(user_profile=user, product=article_name)
+        article_is_purchased = PurchaseOrder.objects.filter(user_profile=user, product=article_name)
+        if len(article_is_purchased) != 0:
             return redirect('article', article_name=article_name)
-        except:
+        else:
             article_name = get_object_or_404(Training_Type, name=article_name)
             purchase_amount = round(article_name.price * 100)
             stripe.api_key = stripe_secret_key
@@ -96,5 +93,12 @@ def payment_successful(request, article_name, po_ref):
         'po': po_ref,
         'profile': profile
     }
+    send_mail(
+              'test',
+              'test',
+              os.environ.get('EMAIL_HOST_USER'),
+              [order.email],
+              fail_silently=False,
+    )
 
     return render(request, 'checkout/payment_successful.html', context)
