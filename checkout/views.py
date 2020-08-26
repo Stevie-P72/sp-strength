@@ -8,6 +8,9 @@ from profiles.forms import UserInfoForm
 import stripe
 from django.core.mail import send_mail
 import os
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 # Create your views here.
 
 
@@ -93,12 +96,27 @@ def payment_successful(request, article_name, po_ref):
         'po': po_ref,
         'profile': profile
     }
-    send_mail(
-              'test',
-              'test',
-              os.environ.get('EMAIL_HOST_USER'),
-              [order.email],
-              fail_silently=False,
-    )
+    gmailUser = os.environ.get('EMAIL_HOST_USER')
+    gmailPassword = os.environ.get('EMAIL_HOST_PASS')
+    recipient = [order.email]
+
+    message = "testtestsetestsetsetset"
+
+    msg = MIMEMultipart()
+    msg['from'] = gmailUser
+    msg['to'] = recipient
+    msg['subject'] = "Test Subject"
+    msg.attach(MIMEText(message))
+    try:
+        mailServer = smtplib.SMTP('smtp.gmail.com', 587)
+        mailServer.ehlo()
+        mailServer.starttls()
+        mailServer.ehlo()
+        mailServer.login(gmailUser, gmailPassword)
+        mailServer.sendmail(gmailUser, recipient, msg.as_string())
+        mailServer.close()
+        print('Email sent!')
+    except:
+        print('Something went wrong...')
 
     return render(request, 'checkout/payment_successful.html', context)
