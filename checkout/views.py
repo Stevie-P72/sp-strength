@@ -97,7 +97,8 @@ def payment_successful(request, article_name, po_ref):
     }
     recipient = [order.email]
     subject = f"Order Confirmation {po_ref}"
-    message = render_to_string('checkout/confirmation_email_content.html')
+    message = render_to_string('checkout/confirmation_email_content.txt',
+                               {'order': order})
     print("test")
     send_mail(
             subject,

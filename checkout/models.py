@@ -19,7 +19,7 @@ class PurchaseOrder(models.Model):
                                 on_delete=models.CASCADE,
                                 db_column='product')
     order_total = models.DecimalField(max_digits=5, decimal_places=2,
-                                      null=False, default=0)
+                                      null=False, default=1)
 
     def _create_po_ref(self):
         return uuid.uuid4().hex.upper()

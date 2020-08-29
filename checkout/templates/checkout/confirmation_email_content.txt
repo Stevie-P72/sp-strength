@@ -1,0 +1,14 @@
+Hello {{ order.first_name }}
+
+Thank you for your recent purchase from SP_Strength:
+
+Order Number: {{ order.po_ref }}
+Order Date: {{ order.date }}
+Order Total: {{ order.order_total }}
+
+Your article is available to view on our website now.
+
+We hope this helps you progress towards your health and fitness goals.
+
+Thank you,
+SP_Strength
