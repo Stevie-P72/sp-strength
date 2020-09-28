@@ -31,6 +31,7 @@
                             </div>
                             <input type="text" value="{{ article_name }}" name="article_name" class="d-none">
                             <input type="text" value="{{ UserProfile }}" name="username" class="d-none">
+                            <p>Cost: £{{article_name.order_total}}</p>
                             <div id="stripe_card" class = "formstyle"></div>
 
                             <button class="btn btn-primary" id="submit-btn">
