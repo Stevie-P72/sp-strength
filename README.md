@@ -39,6 +39,12 @@ A fitness blog, where users can purchase various articles about health and fitne
     * https://github.com/
     * Used to store the project code after being submitted from Git.
 
+## Testing
+* The W3C CSS Validator was used to check all CSS pages in the project to ensure there were no syntax errors.
+    https://jigsaw.w3.org/css-validator/#validate_by_input
+* The website was viewed on a variety of devices to ensure it is usable on mobile, tablet and widescreen devices.
+
+
 ## Deployment
 This project was deployed to Heroku using the following steps.
 * Create a Procfile, detailing the commands used to rund the application.
